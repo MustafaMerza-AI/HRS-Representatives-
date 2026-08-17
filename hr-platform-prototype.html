@@ -1,0 +1,1192 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>نموذج واجهات أولية - نظام الموارد البشرية</title>
+  <style>
+    :root {
+      --bg: #f5f7f8;
+      --surface: #ffffff;
+      --surface-soft: #eef3f5;
+      --line: #d9e2e6;
+      --text: #162126;
+      --muted: #667780;
+      --primary: #0b5d5e;
+      --primary-2: #167a7c;
+      --accent: #b58935;
+      --ok: #168957;
+      --warn: #c98312;
+      --danger: #b83232;
+      --shadow: 0 18px 45px rgba(23, 38, 46, .09);
+      --radius: 8px;
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        linear-gradient(180deg, rgba(11, 93, 94, .05), transparent 280px),
+        var(--bg);
+    }
+
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+
+    .app {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      background: #10282c;
+      color: #fff;
+      padding: 22px 18px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: auto;
+    }
+
+    .brand {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      padding: 4px 6px 22px;
+      border-bottom: 1px solid rgba(255,255,255,.12);
+      margin-bottom: 18px;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: var(--radius);
+      background: #d7a84d;
+      color: #10282c;
+      font-weight: 800;
+    }
+
+    .brand strong { display: block; font-size: 16px; line-height: 1.5; }
+    .brand span { display: block; color: rgba(255,255,255,.68); font-size: 12px; }
+
+    .role-switch {
+      display: grid;
+      gap: 8px;
+      padding: 0 0 18px;
+    }
+
+    .role-switch button,
+    .nav button {
+      border: 0;
+      width: 100%;
+      text-align: right;
+      color: rgba(255,255,255,.78);
+      background: transparent;
+      border-radius: var(--radius);
+      padding: 11px 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .role-switch button.active,
+    .nav button.active {
+      color: #fff;
+      background: rgba(255,255,255,.12);
+    }
+
+    .role-switch button.active { outline: 1px solid rgba(215,168,77,.42); }
+
+    .nav h2 {
+      font-size: 12px;
+      color: rgba(255,255,255,.48);
+      margin: 16px 8px 8px;
+      font-weight: 600;
+    }
+
+    .icon {
+      width: 22px;
+      height: 22px;
+      flex: 0 0 auto;
+      display: inline-grid;
+      place-items: center;
+      color: currentColor;
+    }
+
+    .main {
+      min-width: 0;
+      display: grid;
+      grid-template-rows: auto 1fr;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 3;
+      display: grid;
+      grid-template-columns: minmax(260px, 1fr) auto;
+      gap: 16px;
+      align-items: center;
+      padding: 16px 24px;
+      background: rgba(245,247,248,.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .search {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 0 12px;
+      min-height: 46px;
+      box-shadow: 0 8px 24px rgba(19, 35, 42, .04);
+    }
+
+    .search input {
+      border: 0;
+      outline: 0;
+      width: 100%;
+      background: transparent;
+      color: var(--text);
+    }
+
+    .userbar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      white-space: nowrap;
+    }
+
+    .bell,
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: var(--radius);
+      display: grid;
+      place-items: center;
+    }
+
+    .avatar {
+      background: #dfe9eb;
+      color: var(--primary);
+      font-weight: 800;
+    }
+
+    .content {
+      padding: 24px;
+      max-width: 1480px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .page { display: none; }
+    .page.active { display: block; }
+
+    .page-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .eyebrow {
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 13px;
+      margin: 0 0 6px;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { font-size: 28px; margin-bottom: 8px; letter-spacing: 0; }
+    h2 { font-size: 19px; margin-bottom: 14px; letter-spacing: 0; }
+    h3 { font-size: 16px; margin-bottom: 8px; letter-spacing: 0; }
+    p { color: var(--muted); line-height: 1.8; }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: flex-start;
+    }
+
+    .btn {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--text);
+      border-radius: var(--radius);
+      padding: 10px 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 42px;
+      text-decoration: none;
+    }
+
+    .btn.primary {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+
+    .btn.warn {
+      border-color: rgba(201,131,18,.32);
+      color: #764b0b;
+      background: #fff8ec;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(150px, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .stat,
+    .panel,
+    .person-card,
+    .login-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .stat {
+      padding: 16px;
+      min-height: 118px;
+      display: grid;
+      align-content: space-between;
+    }
+
+    .stat span { color: var(--muted); font-size: 13px; }
+    .stat strong { font-size: 26px; letter-spacing: 0; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.3fr .7fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .grid.equal { grid-template-columns: 1fr 1fr; }
+
+    .panel { padding: 18px; }
+
+    .org-flow {
+      display: grid;
+      gap: 12px;
+    }
+
+    .flow-node {
+      border: 1px solid var(--line);
+      background: var(--surface-soft);
+      border-radius: var(--radius);
+      padding: 13px 14px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .flow-branches {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .flow-arrow {
+      text-align: center;
+      color: var(--muted);
+      line-height: 1;
+    }
+
+    .activity,
+    .scope-list,
+    .request-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .activity li,
+    .scope-item,
+    .request-item {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: var(--radius);
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      background: var(--surface-soft);
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .badge.ok { background: #e7f5ee; color: var(--ok); }
+    .badge.warn { background: #fff2db; color: var(--warn); }
+    .badge.danger { background: #fdecec; color: var(--danger); }
+
+    .scope-layout {
+      display: grid;
+      grid-template-columns: 310px minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .scope-group {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+
+    .scope-group h3 {
+      color: var(--primary);
+      margin: 0 0 10px;
+    }
+
+    .scope-group button {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      border-radius: var(--radius);
+      padding: 9px 10px;
+      text-align: right;
+      color: var(--text);
+    }
+
+    .scope-group button.active,
+    .scope-group button:hover {
+      background: var(--surface-soft);
+    }
+
+    .tree {
+      border: 1px dashed #b7c7cd;
+      border-radius: var(--radius);
+      padding: 16px;
+      background: #fbfcfc;
+    }
+
+    .tree-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .tree-row:last-child { border-bottom: 0; }
+    .indent { padding-right: 28px; color: var(--muted); }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    th, td {
+      text-align: right;
+      padding: 13px 12px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: middle;
+    }
+
+    th {
+      background: var(--surface-soft);
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+    tbody tr { cursor: pointer; }
+    tbody tr:hover { background: #fbfcfc; }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .field {
+      display: grid;
+      gap: 7px;
+    }
+
+    .field label {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 11px 12px;
+      background: #fff;
+      color: var(--text);
+      min-height: 44px;
+    }
+
+    .field textarea { min-height: 94px; resize: vertical; }
+    .field.full { grid-column: 1 / -1; }
+
+    .photo-upload {
+      border: 1px dashed #a7bcc2;
+      background: #f8fbfb;
+      min-height: 158px;
+      border-radius: var(--radius);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      color: var(--muted);
+      padding: 14px;
+    }
+
+    .person-card {
+      overflow: hidden;
+    }
+
+    .person-hero {
+      min-height: 154px;
+      padding: 22px;
+      background:
+        linear-gradient(135deg, rgba(11,93,94,.94), rgba(19,65,71,.96)),
+        repeating-linear-gradient(45deg, rgba(255,255,255,.12) 0 1px, transparent 1px 14px);
+      color: #fff;
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .profile-photo {
+      width: 78px;
+      height: 78px;
+      border-radius: var(--radius);
+      display: grid;
+      place-items: center;
+      background: #d7a84d;
+      color: #10282c;
+      font-size: 28px;
+      font-weight: 800;
+      border: 3px solid rgba(255,255,255,.72);
+    }
+
+    .person-body { padding: 18px; }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 16px;
+    }
+
+    .tabs button {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: var(--radius);
+      padding: 8px 12px;
+      color: var(--muted);
+    }
+
+    .tabs button.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .info {
+      background: #fbfcfc;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 12px;
+    }
+
+    .info span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
+
+    .login-screen {
+      min-height: calc(100vh - 48px);
+      display: grid;
+      place-items: center;
+      padding: 20px;
+    }
+
+    .login-card {
+      width: min(440px, 100%);
+      padding: 26px;
+    }
+
+    .login-logo {
+      width: 64px;
+      height: 64px;
+      border-radius: var(--radius);
+      display: grid;
+      place-items: center;
+      background: var(--primary);
+      color: #fff;
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(9, 21, 25, .42);
+      padding: 20px;
+    }
+
+    .modal.active { display: flex; }
+
+    .dialog {
+      width: min(720px, 100%);
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      box-shadow: 0 28px 80px rgba(0,0,0,.2);
+      padding: 18px;
+    }
+
+    .dialog-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .close {
+      border: 1px solid var(--line);
+      background: #fff;
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius);
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 1180px) {
+      .stats { grid-template-columns: repeat(3, 1fr); }
+      .flow-branches { grid-template-columns: repeat(2, 1fr); }
+      .grid, .grid.equal, .scope-layout { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 820px) {
+      .app { grid-template-columns: 1fr; }
+      .sidebar {
+        position: static;
+        height: auto;
+        border-bottom: 1px solid rgba(255,255,255,.12);
+      }
+      .topbar { grid-template-columns: 1fr; padding: 14px; }
+      .content { padding: 14px; }
+      .page-head { display: grid; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .form-grid, .info-grid { grid-template-columns: 1fr; }
+      .flow-branches { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 520px) {
+      .stats { grid-template-columns: 1fr; }
+      .activity li, .scope-item, .request-item { align-items: flex-start; flex-direction: column; }
+      th:nth-child(3), td:nth-child(3) { display: none; }
+      h1 { font-size: 23px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">HR</div>
+        <div>
+          <strong>نظام الموارد البشرية</strong>
+          <span>الهيكل التنظيمي والصلاحيات</span>
+        </div>
+      </div>
+
+      <div class="role-switch" aria-label="اختيار الدور">
+        <button class="active" data-role=" العليا" data-page="executive-board"><span class="icon">◫</span> الإدارة العليا</button>
+        <button data-role=" التنفيذية" data-page="ops-dashboard"><span class="icon">▣</span> الإدارة التنفيذية</button>
+        <button data-role=" المسؤول" data-page="manager-dashboard"><span class="icon">◉</span> بوابة المسؤول</button>
+      </div>
+
+      <nav class="nav" aria-label="القائمة الرئيسية">
+        <h2>الواجهات</h2>
+        <button class="active" data-page="executive-board"><span class="icon">⌂</span> لوحة الإدارة العليا</button>
+        <button data-page="ops-dashboard"><span class="icon">▤</span> لوحة الإدارة التنفيذية</button>
+        <button data-page="responsibilities"><span class="icon">☷</span> المناطق والمسؤوليات</button>
+        <button data-page="assign-manager"><span class="icon">＋</span> تعيين مسؤول</button>
+        <button data-page="manager-dashboard"><span class="icon">◈</span> بوابة المسؤول</button>
+        <button data-page="people-directory"><span class="icon">⌕</span> دليل الأفراد والبحث</button>
+        <button data-page="add-person"><span class="icon">✎</span> إضافة شخص</button>
+        <button data-page="person-profile"><span class="icon">▥</span> بطاقة الشخص</button>
+        <button data-page="approvals"><span class="icon">✓</span> الاقتراحات والموافقات</button>
+        <button data-page="login"><span class="icon">↪</span> شاشة الدخول</button>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <label class="search">
+          <span class="icon">⌕</span>
+          <input id="globalSearch" type="search" placeholder="ابحث عن شخص، دائرة، وزارة، محافظة..." />
+        </label>
+        <div class="userbar">
+          <button class="bell" title="الإشعارات">◔</button>
+          <div>
+            <strong id="userName">أحمد محمد علي</strong>
+            <div id="userScope" style="color: var(--muted); font-size: 12px;">الإدارة العليا</div>
+          </div>
+          <div class="avatar">أ</div>
+        </div>
+      </header>
+
+      <section class="content">
+        <section id="executive-board" class="page active">
+          <div class="page-head">
+            <div>
+              <p class="eyebrow">المستوى 1</p>
+              <h1>لوحة الإدارة العليا</h1>
+              <p>إشراف شامل على النظام، مع رؤية عامة للأفراد، المسؤولين، الجهات، والتقييمات.</p>
+            </div>
+            <div class="actions">
+              <button class="btn">تصدير PDF</button>
+              <button class="btn primary">إضافة إدارة تنفيذية</button>
+            </div>
+          </div>
+
+          <div class="stats">
+            <div class="stat"><span>إجمالي الأفراد</span><strong>4,820</strong></div>
+            <div class="stat"><span>الإدارة التنفيذية</span><strong>12</strong></div>
+            <div class="stat"><span>مسؤولو القطاعات</span><strong>94</strong></div>
+            <div class="stat"><span>المحافظات</span><strong>18</strong></div>
+            <div class="stat"><span>الوزارات</span><strong>24</strong></div>
+            <div class="stat"><span>الهيئات المستقلة</span><strong>17</strong></div>
+          </div>
+
+          <div class="grid">
+            <div class="panel">
+              <h2>مخطط الهيكل العام</h2>
+              <div class="org-flow">
+                <div class="flow-node"><strong>الإدارة العليا</strong><span class="badge ok">إشراف ورقابة</span></div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-node"><strong>الإدارة التنفيذية</strong><span class="badge">موافقات وتشغيل</span></div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-branches">
+                  <div class="flow-node"><strong>المحافظات</strong><span>18</span></div>
+                  <div class="flow-node"><strong>الوزارات</strong><span>24</span></div>
+                  <div class="flow-node"><strong>الهيئات</strong><span>17</span></div>
+                  <div class="flow-node"><strong>قطاعات أخرى</strong><span>9</span></div>
+                </div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-node"><strong>المسؤولون</strong><span class="badge">حسب نطاق الصلاحية</span></div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-node"><strong>الأفراد</strong><span>بيانات، تقييمات، ملاحظات</span></div>
+              </div>
+            </div>
+            <div class="panel">
+              <h2>مؤشرات رقابية</h2>
+              <ul class="activity">
+                <li><span>تقييمات هذا الشهر</span><strong>310</strong></li>
+                <li><span>بيانات غير مكتملة</span><span class="badge warn">18 حالة</span></li>
+                <li><span>طلبات موافقة معلقة</span><span class="badge warn">12 طلب</span></li>
+                <li><span>عمليات تعديل اليوم</span><strong>46</strong></li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="ops-dashboard" class="page">
+          <div class="page-head">
+            <div>
+              <p class="eyebrow">المستوى 2</p>
+              <h1>لوحة الإدارة التنفيذية</h1>
+              <p>مركز تشغيل النظام: الموافقات، تعيين المسؤولين، إدارة المناطق والجهات، ومتابعة النشاط.</p>
+            </div>
+            <div class="actions">
+              <button class="btn warn" data-page-link="approvals">مراجعة الطلبات</button>
+              <button class="btn primary" data-page-link="assign-manager">تعيين مسؤول جديد</button>
+            </div>
+          </div>
+          <div class="stats">
+            <div class="stat"><span>طلبات بانتظار الموافقة</span><strong>12</strong></div>
+            <div class="stat"><span>المسؤولون النشطون</span><strong>94</strong></div>
+            <div class="stat"><span>المناطق/الجهات</span><strong>68</strong></div>
+            <div class="stat"><span>الأفراد المسجلون</span><strong>4,820</strong></div>
+            <div class="stat"><span>تقييمات هذا الشهر</span><strong>310</strong></div>
+            <div class="stat"><span>حسابات معطلة</span><strong>7</strong></div>
+          </div>
+          <div class="grid equal">
+            <div class="panel">
+              <h2>طلبات موافقة عاجلة</h2>
+              <ul class="request-list">
+                <li class="request-item"><div><strong>تعيين مسؤول دائرة صحة البصرة</strong><p>مقدم الطلب: مسؤول وزارة الصحة</p></div><span class="badge warn">قيد المراجعة</span></li>
+                <li class="request-item"><div><strong>إضافة نطاق الزبير</strong><p>مقدم الطلب: مسؤول محافظة البصرة</p></div><span class="badge warn">طلب تعديل</span></li>
+                <li class="request-item"><div><strong>تفعيل حساب مسؤول قطاع</strong><p>مقدم الطلب: الإدارة التنفيذية</p></div><span class="badge ok">جاهز للاعتماد</span></li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h2>آخر النشاطات</h2>
+              <ul class="activity">
+                <li><span>إنشاء حساب basra.admin</span><span class="badge ok">منذ 12 دقيقة</span></li>
+                <li><span>تحديث بيانات وزارة الصحة</span><span class="badge">اليوم</span></li>
+                <li><span>تصدير تقرير محافظة البصرة</span><span class="badge">أمس</span></li>
+                <li><span>رفض طلب مسؤولية مكرر</span><span class="badge danger">مرفوض</span></li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="responsibilities" class="page">
+          <div class="page-head">
+            <div>
+              <p class="eyebrow">إدارة النطاقات</p>
+              <h1>المناطق والمسؤوليات</h1>
+              <p>عرض هرمي للمحافظات، الوزارات، الهيئات، والمسؤولين المرتبطين بكل نطاق.</p>
+            </div>
+            <button class="btn primary" data-page-link="assign-manager">تعيين مسؤول</button>
+          </div>
+          <div class="scope-layout">
+            <div>
+              <div class="scope-group">
+                <h3>المحافظات</h3>
+                <button class="active">محافظة البصرة</button>
+                <button>بغداد</button>
+                <button>نينوى</button>
+                <button>كربلاء</button>
+                <button>النجف</button>
+              </div>
+              <div class="scope-group">
+                <h3>الوزارات</h3>
+                <button>وزارة الصحة</button>
+                <button>وزارة الداخلية</button>
+                <button>وزارة التعليم العالي</button>
+                <button>وزارة التجارة</button>
+              </div>
+              <div class="scope-group">
+                <h3>الهيئات المستقلة</h3>
+                <button>هيئة النزاهة</button>
+                <button>هيئة الإعلام</button>
+                <button>هيئة الاستثمار</button>
+              </div>
+            </div>
+            <div class="panel">
+              <h2>محافظة البصرة</h2>
+              <ul class="scope-list">
+                <li class="scope-item"><span>مسؤول المحافظة</span><strong>أحمد محمد علي</strong></li>
+                <li class="scope-item"><span>نطاق الصلاحية</span><span class="badge ok">Scope = محافظة البصرة</span></li>
+              </ul>
+              <div style="height: 14px;"></div>
+              <div class="tree">
+                <div class="tree-row"><strong>محافظة البصرة</strong><span class="badge">645 فرد</span></div>
+                <div class="tree-row indent">↳ مركز البصرة <span class="badge">180 فرد</span></div>
+                <div class="tree-row indent">↳ الزبير <span class="badge">96 فرد</span></div>
+                <div class="tree-row indent">↳ القرنة <span class="badge">74 فرد</span></div>
+                <div class="tree-row indent">↳ شط العرب <span class="badge">52 فرد</span></div>
+                <div class="tree-row indent">↳ أبو الخصيب <span class="badge">61 فرد</span></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="assign-manager" class="page">
+          <div class="page-head">
+            <div>
+              <p class="eyebrow">إنشاء حساب مسؤول</p>
+              <h1>تعيين مسؤول جديد</h1>
+              <p>النظام ينشئ اسم مستخدم وكلمة مرور مؤقتة ويربط الحساب تلقائياً بالنطاق المحدد.</p>
+            </div>
+          </div>
+          <div class="grid">
+            <div class="panel">
+              <h2>بيانات التكليف</h2>
+              <div class="form-grid">
+                <div class="field">
+                  <label>نوع المسؤولية</label>
+                  <select><option>محافظة</option><option>وزارة</option><option>هيئة</option><option>دائرة</option><option>قطاع</option></select>
+                </div>
+                <div class="field">
+                  <label>المسؤولية</label>
+                  <select><option>محافظة البصرة</option><option>وزارة الصحة</option><option>دائرة صحة البصرة</option></select>
+                </div>
+                <div class="field">
+                  <label>اسم المسؤول</label>
+                  <input value="أحمد محمد علي" />
+                </div>
+                <div class="field">
+                  <label>تاريخ التكليف</label>
+                  <input type="date" value="2026-08-17" />
+                </div>
+                <div class="field full">
+                  <label>ملاحظات</label>
+                  <textarea>تكليف مسؤول محافظة البصرة مع صلاحية إدارة الأفراد داخل النطاق فقط.</textarea>
+                </div>
+              </div>
+              <div class="actions" style="margin-top: 14px;">
+                <button class="btn primary" id="createAccount">إنشاء وتفعيل الحساب</button>
+              </div>
+            </div>
+            <div class="panel">
+              <h2>نتيجة الإنشاء</h2>
+              <ul class="activity">
+                <li><span>Username</span><strong>basra.admin</strong></li>
+                <li><span>Temporary Password</span><strong>••••••••••</strong></li>
+                <li><span>Scope</span><span class="badge ok">محافظة البصرة</span></li>
+                <li><span>أول دخول</span><span class="badge warn">تغيير كلمة المرور إلزامي</span></li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="manager-dashboard" class="page">
+          <div class="page-head">
+            <div>
+              <p class="eyebrow">المستوى 3</p>
+              <h1>بوابة المسؤول</h1>
+              <p>مرحباً أحمد. المسؤولية الحالية: محافظة البصرة. تظهر هنا بيانات النطاق فقط.</p>
+            </div>
+            <div class="actions">
+              <button class="btn" data-page-link="add-person">إضافة شخص</button>
+              <button class="btn primary" data-page-link="people-directory">فتح دليل الأفراد</button>
+            </div>
+          </div>
+          <div class="stats">
+            <div class="stat"><span>إجمالي الأفراد</span><strong>645</strong></div>
+            <div class="stat"><span>النطاقات التابعة</span><strong>7</strong></div>
+            <div class="stat"><span>التقييمات</span><strong>420</strong></div>
+            <div class="stat"><span>بيانات غير مكتملة</span><strong>18</strong></div>
+            <div class="stat"><span>اقتراحات مرسلة</span><strong>5</strong></div>
+            <div class="stat"><span>طلبات معتمدة</span><strong>3</strong></div>
+          </div>
+          <div class="grid equal">
+            <div class="panel">
+              <h2>آخر الأنشطة</h2>
+              <ul class="activity">
+                <li><span>إضافة موظف جديد</span><span class="badge">مركز البصرة</span></li>
+                <li><span>تحديث معلومات موظف</span><span class="badge">الزبير</span></li>
+                <li><span>إرسال تقييم</span><span class="badge ok">تم</span></li>
+                <li><span>إرسال اقتراح مسؤول</span><span class="badge warn">قيد المراجعة</span></li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h2>حدود الصلاحية</h2>
+              <p>الواجهة نفسها تخدم مسؤول محافظة أو وزارة أو هيئة. الفرق الوحيد هو نطاق البيانات المسموح به.</p>
+              <div class="flow-node"><strong>Scope الحالي</strong><span class="badge ok">محافظة البصرة</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="people-directory" class="page">
+          <div class="page-head">
+            <div>
+              <p class="eyebrow">البحث الهرمي والعام</p>
+              <h1>دليل الأفراد</h1>
+              <p>يمكن البحث باسم شخص، وزارة، محافظة، دائرة، أو اختيار القطاع من القوائم الهرمية.</p>
+            </div>
+          </div>
+          <div class="grid">
+            <div class="panel">
+              <h2>نتائج البحث</h2>
+              <table>
+                <thead>
+                  <tr><th>الاسم</th><th>المنصب</th><th>مكان العمل</th><th>المسؤولية</th></tr>
+                </thead>
+                <tbody>
+                  <tr data-page-link="person-profile"><td>أحمد محمد علي</td><td>مدير</td><td>بغداد</td><td>وزارة الصحة</td></tr>
+                  <tr data-page-link="person-profile"><td>علي حسن كريم</td><td>مسؤول قسم</td><td>البصرة</td><td>صحة البصرة</td></tr>
+                  <tr data-page-link="person-profile"><td>محمد سعد جاسم</td><td>مدير</td><td>النجف</td><td>صحة النجف</td></tr>
+                  <tr data-page-link="person-profile"><td>سارة كاظم حسن</td><td>مسؤولة وحدة</td><td>البصرة</td><td>مركز البصرة</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="panel">
+              <h2>اختيار القطاع</h2>
+              <div class="form-grid" style="grid-template-columns: 1fr;">
+                <div class="field"><label>القطاع</label><select><option>الوزارات</option><option>المحافظات</option><option>الهيئات المستقلة</option></select></div>
+                <div class="field"><label>الجهة</label><select><option>وزارة الصحة</option><option>محافظة البصرة</option><option>هيئة الاستثمار</option></select></div>
+                <div class="field"><label>النطاق الفرعي</label><select><option>دائرة صحة البصرة</option><option>صحة النجف</option><option>مركز الوزارة</option></select></div>
+              </div>
+              <div class="actions" style="margin-top: 14px;">
+                <button class="btn primary">عرض النتائج</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="add-person" class="page">
+          <div class="page-head">
+            <div>
+              <p class="eyebrow">إدارة الأفراد</p>
+              <h1>إضافة شخص</h1>
+              <p>نموذج منظّم لإضافة بيانات الفرد وربطه بالمحافظة/الوزارة/الدائرة والقسم.</p>
+            </div>
+          </div>
+          <div class="grid">
+            <div class="panel">
+              <h2>المعلومات الشخصية</h2>
+              <div class="form-grid">
+                <div class="field full">
+                  <div class="photo-upload">
+                    <div>
+                      <strong>الصورة الشخصية</strong>
+                      <p>منطقة رفع واضحة داخل النموذج</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="field"><label>الاسم الثلاثي *</label><input value="علي حسن كريم" /></div>
+                <div class="field"><label>تاريخ الميلاد *</label><input type="date" value="1985-05-12" /></div>
+                <div class="field"><label>رقم الهاتف *</label><input value="07XXXXXXXXX" /></div>
+                <div class="field"><label>المنصب *</label><input value="مسؤول قسم" /></div>
+                <div class="field"><label>مكان العمل *</label><input value="دائرة صحة البصرة" /></div>
+                <div class="field"><label>الارتباط التنظيمي *</label><input value="وزارة الصحة ← دائرة صحة البصرة ← قسم..." /></div>
+                <div class="field"><label>المحافظة / الوزارة / الهيئة</label><select><option>وزارة الصحة</option><option>محافظة البصرة</option></select></div>
+                <div class="field"><label>الدائرة</label><input value="دائرة صحة البصرة" /></div>
+                <div class="field"><label>القسم</label><input value="قسم المتابعة" /></div>
+                <div class="field full"><label>ملاحظات</label><textarea></textarea></div>
+              </div>
+              <div class="actions" style="margin-top: 14px;">
+                <button class="btn">حفظ</button>
+                <button class="btn primary">حفظ وإضافة تقييم</button>
+              </div>
+            </div>
+            <div class="panel">
+              <h2>تنبيه الصلاحيات</h2>
+              <p>عند حفظ الشخص من بوابة مسؤول البصرة، يجب أن يرتبط تلقائياً بالنطاق المسموح، ولا يسمح باختيار جهة خارج هذا النطاق.</p>
+              <div class="flow-node"><strong>النطاق المسموح</strong><span class="badge ok">محافظة البصرة</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="person-profile" class="page">
+          <div class="page-head">
+            <div>
+              <p class="eyebrow">ملف فرد</p>
+              <h1>بطاقة معلومات الشخص</h1>
+              <p>صفحة الملف الشخصي تعرض البيانات الأساسية، التقييمات، الملاحظات، وسجل النشاط.</p>
+            </div>
+            <button class="btn primary" id="openEval">إضافة تقييم</button>
+          </div>
+          <div class="person-card">
+            <div class="person-hero">
+              <div class="profile">
+                <div class="profile-photo">ع</div>
+                <div>
+                  <h2 style="margin: 0 0 6px;">علي حسن كريم</h2>
+                  <div>مسؤول قسم - وزارة الصحة</div>
+                </div>
+              </div>
+              <span class="badge ok">داخل Scope المستخدم</span>
+            </div>
+            <div class="person-body">
+              <div class="tabs">
+                <button class="active">المعلومات</button>
+                <button>التقييمات</button>
+                <button>الملاحظات</button>
+                <button>سجل النشاط</button>
+              </div>
+              <div class="info-grid">
+                <div class="info"><span>الاسم الثلاثي</span><strong>علي حسن كريم</strong></div>
+                <div class="info"><span>تاريخ الميلاد</span><strong>12 / 05 / 1985</strong></div>
+                <div class="info"><span>رقم الهاتف</span><strong>07XXXXXXXXX</strong></div>
+                <div class="info"><span>مكان العمل</span><strong>وزارة الصحة - دائرة صحة البصرة</strong></div>
+                <div class="info"><span>المنصب</span><strong>مسؤول قسم</strong></div>
+                <div class="info"><span>الارتباط التنظيمي</span><strong>وزارة الصحة ← دائرة صحة البصرة ← قسم المتابعة</strong></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="approvals" class="page">
+          <div class="page-head">
+            <div>
+              <p class="eyebrow">سير العمل</p>
+              <h1>الاقتراحات والموافقات</h1>
+              <p>المسؤول يرسل اقتراحاً، والإدارة التنفيذية تراجعه بالموافقة أو الرفض أو طلب التعديل.</p>
+            </div>
+          </div>
+          <div class="grid">
+            <div class="panel">
+              <h2>طلب تعيين مسؤول</h2>
+              <ul class="activity">
+                <li><span>المقترح</span><strong>محمد أحمد علي</strong></li>
+                <li><span>المسؤولية</span><strong>دائرة صحة البصرة</strong></li>
+                <li><span>مقدم الطلب</span><strong>مسؤول وزارة الصحة</strong></li>
+                <li><span>الحالة</span><span class="badge warn">قيد المراجعة</span></li>
+              </ul>
+              <div class="actions" style="margin-top: 14px;">
+                <button class="btn primary">موافقة</button>
+                <button class="btn">طلب تعديل</button>
+                <button class="btn warn">رفض</button>
+              </div>
+            </div>
+            <div class="panel">
+              <h2>حالات الطلبات</h2>
+              <ul class="request-list">
+                <li class="request-item"><span>قيد المراجعة</span><span class="badge warn">بانتظار قرار</span></li>
+                <li class="request-item"><span>معتمد</span><span class="badge ok">يتم إنشاء الحساب/المسؤولية</span></li>
+                <li class="request-item"><span>مرفوض</span><span class="badge danger">يغلق الطلب مع السبب</span></li>
+                <li class="request-item"><span>طلب تعديل</span><span class="badge">يرجع لمقدم الطلب</span></li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="login" class="page">
+          <div class="login-screen">
+            <div class="login-card">
+              <div class="login-logo">HR</div>
+              <h1>نظام إدارة الموارد البشرية</h1>
+              <p>بعد تسجيل الدخول يتعرف النظام تلقائياً على الدور ويحوّل المستخدم إلى لوحة التحكم المناسبة.</p>
+              <div class="form-grid" style="grid-template-columns: 1fr;">
+                <div class="field"><label>اسم المستخدم</label><input value="basra.admin" /></div>
+                <div class="field"><label>كلمة المرور</label><input type="password" value="temporary" /></div>
+              </div>
+              <div class="actions" style="margin-top: 16px;">
+                <button class="btn primary" data-page-link="manager-dashboard">تسجيل الدخول</button>
+                <button class="btn">نسيت كلمة المرور</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <div id="evalModal" class="modal" role="dialog" aria-modal="true" aria-label="إضافة تقييم">
+    <div class="dialog">
+      <div class="dialog-head">
+        <div>
+          <h2 style="margin: 0;">إضافة تقييم</h2>
+          <p style="margin: 4px 0 0;">يسجل التاريخ واسم المقيم تلقائياً.</p>
+        </div>
+        <button class="close" id="closeEval" aria-label="إغلاق">×</button>
+      </div>
+      <div class="form-grid">
+        <div class="field"><label>الأداء</label><select><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select></div>
+        <div class="field"><label>الالتزام</label><select><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select></div>
+        <div class="field"><label>التعاون</label><select><option>4</option><option>5</option><option>3</option><option>2</option><option>1</option></select></div>
+        <div class="field"><label>تحمل المسؤولية</label><select><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select></div>
+        <div class="field"><label>الكفاءة</label><select><option>4</option><option>5</option><option>3</option><option>2</option><option>1</option></select></div>
+        <div class="field full"><label>ملاحظات المسؤول</label><textarea>أداء جيد مع حاجة إلى متابعة دورية للمهام الشهرية.</textarea></div>
+      </div>
+      <div class="actions" style="margin-top: 14px;">
+        <button class="btn primary">حفظ التقييم</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const pages = [...document.querySelectorAll(".page")];
+    const navButtons = [...document.querySelectorAll("[data-page]")];
+    const links = [...document.querySelectorAll("[data-page-link]")];
+    const roleButtons = [...document.querySelectorAll(".role-switch button")];
+    const userScope = document.getElementById("userScope");
+    const userName = document.getElementById("userName");
+
+    function showPage(id) {
+      pages.forEach(page => page.classList.toggle("active", page.id === id));
+      navButtons.forEach(button => button.classList.toggle("active", button.dataset.page === id));
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    navButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        showPage(button.dataset.page);
+        if (button.closest(".role-switch")) {
+          roleButtons.forEach(item => item.classList.remove("active"));
+          button.classList.add("active");
+          const role = button.textContent.trim();
+          userScope.textContent = role.includes("العليا") ? "الإدارة العليا" : role.includes("التنفيذية") ? "الإدارة التنفيذية" : "محافظة البصرة";
+          userName.textContent = role.includes("المسؤول") ? "أحمد محمد علي" : "مستخدم النظام";
+        }
+      });
+    });
+
+    links.forEach(link => {
+      link.addEventListener("click", () => showPage(link.dataset.pageLink));
+    });
+
+    document.querySelectorAll("tbody tr[data-page-link]").forEach(row => {
+      row.addEventListener("click", () => showPage(row.dataset.pageLink));
+    });
+
+    document.getElementById("globalSearch").addEventListener("keydown", event => {
+      if (event.key === "Enter") showPage("people-directory");
+    });
+
+    const modal = document.getElementById("evalModal");
+    document.getElementById("openEval").addEventListener("click", () => modal.classList.add("active"));
+    document.getElementById("closeEval").addEventListener("click", () => modal.classList.remove("active"));
+    modal.addEventListener("click", event => {
+      if (event.target === modal) modal.classList.remove("active");
+    });
+
+    document.getElementById("createAccount").addEventListener("click", () => {
+      alert("تم إنشاء الحساب التجريبي وربطه بنطاق محافظة البصرة.");
+    });
+  </script>
+</body>
+</html>
