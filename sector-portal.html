@@ -1,0 +1,384 @@
+﻿<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>بوابة قطاع - شؤون الدولة</title>
+  <style>
+    :root {
+      --bg: #eef2f5;
+      --surface: #ffffff;
+      --line: #d8e0e7;
+      --text: #182433;
+      --muted: #667586;
+      --primary: #0b2545;
+      --primary-2: #123a63;
+      --accent: #b9902f;
+      --red: #c91f2c;
+      --green: #168447;
+      --shadow: 0 18px 42px rgba(11, 37, 69, .12);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: "IBM Plex Sans Arabic", "Cairo", "Tajawal", "Segoe UI", Tahoma, Arial, sans-serif;
+      background:
+        linear-gradient(90deg, rgba(11,37,69,.035) 1px, transparent 1px),
+        linear-gradient(180deg, #f8fafc, var(--bg));
+      background-size: 44px 44px, auto;
+    }
+
+    a, button { font: inherit; }
+
+    .top {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 16px clamp(18px, 5vw, 70px);
+      background: rgba(255,255,255,.92);
+      border-bottom: 1px solid rgba(11,37,69,.08);
+      box-shadow: 0 10px 28px rgba(11,37,69,.08);
+      backdrop-filter: blur(12px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .mark {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      border-radius: 16px;
+      font-weight: 900;
+      box-shadow: 0 10px 20px rgba(11,37,69,.16);
+    }
+
+    .brand strong {
+      display: block;
+      color: var(--primary);
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .brand span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 14px;
+      color: var(--primary);
+      background: #fff;
+      border: 1px solid rgba(11,37,69,.13);
+      border-radius: 12px;
+      text-decoration: none;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(11,37,69,.06);
+    }
+
+    .btn.primary {
+      color: #fff;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+    }
+
+    main {
+      padding: 30px clamp(18px, 5vw, 70px) 44px;
+    }
+
+    .hero {
+      min-height: 230px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: end;
+      padding: 34px;
+      color: #fff;
+      background:
+        linear-gradient(90deg, rgba(201,31,44,.88) 0 7px, transparent 7px),
+        linear-gradient(135deg, #071b33, #0b2545 48%, #123a63);
+      border-radius: 20px;
+      box-shadow: 0 22px 48px rgba(11,37,69,.2);
+    }
+
+    .eyebrow {
+      width: fit-content;
+      margin: 0 0 8px;
+      padding: 6px 12px;
+      color: #10243d;
+      background: #fff6dd;
+      border-radius: 999px;
+      font-weight: 900;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      color: #fff;
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 1.1;
+    }
+
+    .hero p {
+      max-width: 720px;
+      margin: 0;
+      color: rgba(255,255,255,.78);
+      line-height: 1.9;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(130px, 1fr));
+      gap: 12px;
+      min-width: 310px;
+    }
+
+    .summary div {
+      padding: 16px;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 14px;
+    }
+
+    .summary strong {
+      display: block;
+      color: #fff;
+      font-size: 30px;
+      font-weight: 900;
+    }
+
+    .summary span { color: rgba(255,255,255,.72); }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 18px;
+      margin-top: 22px;
+      align-items: start;
+    }
+
+    .panel {
+      background: rgba(255,255,255,.96);
+      border: 1px solid rgba(11,37,69,.09);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .panel h2 {
+      margin: 0;
+      padding: 18px 20px;
+      color: var(--primary);
+      border-bottom: 1px solid var(--line);
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .list {
+      display: grid;
+      gap: 10px;
+      padding: 16px;
+    }
+
+    .item {
+      display: grid;
+      grid-template-columns: 46px minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      padding: 14px;
+      background: #f7f9fb;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+    }
+
+    .icon {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: linear-gradient(135deg, var(--green), #0b6a42);
+      border-radius: 14px;
+      font-weight: 900;
+    }
+
+    .item strong {
+      display: block;
+      color: var(--primary);
+      font-size: 16px;
+    }
+
+    .item span,
+    .note {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .badge {
+      padding: 5px 10px;
+      color: var(--primary);
+      background: #edf4fb;
+      border: 1px solid #d9e6f1;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .note {
+      padding: 18px 20px;
+    }
+
+    @media (max-width: 920px) {
+      .hero,
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .summary {
+        min-width: 0;
+      }
+
+      .top {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <div class="mark" id="portalMark">▦</div>
+      <div>
+        <strong>شؤون الدولة</strong>
+        <span id="portalSubtitle">بوابة قطاعية مستقلة</span>
+      </div>
+    </div>
+    <div class="actions">
+      <a class="btn" href="state-gateway.html">بوابة الهيكل العام</a>
+      <a class="btn" href="hr-platform-prototype.html">العودة للنظام</a>
+      <button class="btn primary" onclick="window.print()">طباعة</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <p class="eyebrow" id="portalEyebrow">بوابة مستقلة</p>
+        <h1 id="portalTitle">بوابة قطاع</h1>
+        <p id="portalDescription">تعرض هذه الصفحة نطاقاً مستقلاً من هيكل الدولة مع المؤشرات والتشكيلات التابعة له.</p>
+      </div>
+      <div class="summary" id="portalSummary"></div>
+    </section>
+
+    <section class="grid">
+      <div class="panel">
+        <h2>التشكيلات التابعة</h2>
+        <div class="list" id="portalUnits"></div>
+      </div>
+      <div class="panel">
+        <h2>طريقة العمل داخل البوابة</h2>
+        <p class="note" id="portalNote">هذه البوابة مخصصة للتنقل والعمل داخل نطاق محدد، وتُترك التفاصيل الدقيقة لكل تشكيل داخل صفحات العمل الفرعية.</p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const portals = {
+      pmo: {
+        mark: "ر",
+        title: "بوابة رئاسة الوزراء",
+        subtitle: "مؤسسات رئاسة الوزراء",
+        description: "نطاق مكتب رئيس مجلس الوزراء والتشكيلات المرتبطة برئاسة الوزراء.",
+        summary: [["التشكيلات", "24"], ["المشغولة", "16"], ["الشاغرة", "8"], ["طلبات معلقة", "5"]],
+        units: ["مكتب رئيس مجلس الوزراء", "الأمانة العامة لمجلس الوزراء", "الدائرة القانونية", "الدائرة الإدارية والمالية", "دائرة المتابعة والتنسيق الحكومي"],
+        note: "تظهر هنا بوابة العمل الخاصة برئاسة الوزراء. عند بناء النسخة التالية يمكن ربط كل تشكيل بصفحة تفاصيل مستقلة."
+      },
+      ministries: {
+        mark: "و",
+        title: "بوابة الوزارات",
+        subtitle: "إدارة الوزارات",
+        description: "نطاق الوزارات ومسؤولي الوزارات وتشكيلات كل وزارة.",
+        summary: [["الوزارات", "23"], ["المسؤولون", "23"], ["إجمالي الأفراد", "8,540"], ["طلبات معلقة", "14"]],
+        units: ["وزارة الصحة", "وزارة الداخلية", "وزارة النقل", "وزارة التعليم العالي", "وزارة التجارة", "وزارة المالية", "وزارة التخطيط"],
+        note: "تُستخدم هذه البوابة من عضو الإدارة التنفيذية المكلف بالوزارات، ولا تعرض القطاعات الأخرى إلا للجنة العليا."
+      },
+      parliament: {
+        mark: "ن",
+        title: "بوابة مجلس النواب",
+        subtitle: "السلطة التشريعية",
+        description: "نطاق مجلس النواب واللجان البرلمانية والتشكيلات التشريعية.",
+        summary: [["التشكيلات", "2"], ["اللجان", "25"], ["حسابات مسؤولة", "4"], ["طلبات معلقة", "3"]],
+        units: ["مجلس النواب", "اللجان البرلمانية", "الدائرة الإدارية", "الدائرة القانونية"],
+        note: "هذه بوابة مستقلة للسلطة التشريعية، وتظهر حسب الصلاحية الممنوحة."
+      },
+      judiciary: {
+        mark: "ق",
+        title: "بوابة مجلس القضاء",
+        subtitle: "السلطة القضائية",
+        description: "نطاق مجلس القضاء والجهات القضائية المرتبطة.",
+        summary: [["التشكيلات", "4"], ["المسؤولون", "4"], ["بيانات ناقصة", "11"], ["طلبات معلقة", "2"]],
+        units: ["مجلس القضاء الأعلى", "المحكمة الاتحادية العليا", "جهاز الادعاء العام", "هيئة الإشراف القضائي"],
+        note: "هذه البوابة تفصل الجهات القضائية عن بقية الهيكل لتقليل التشويش في المخطط العام."
+      },
+      commissions: {
+        mark: "هـ",
+        title: "بوابة الهيئات المستقلة",
+        subtitle: "الهيئات المستقلة",
+        description: "نطاق الهيئات المستقلة ومسؤوليها وتقاريرها.",
+        summary: [["الهيئات", "17"], ["المسؤولون", "17"], ["بيانات ناقصة", "31"], ["طلبات معلقة", "6"]],
+        units: ["هيئة النزاهة", "هيئة الإعلام", "هيئة الاستثمار", "هيئة الانتخابات"],
+        note: "يمكن لاحقاً إضافة صفحة مستقلة لكل هيئة وربطها بالمخطط التنظيمي الخاص بها."
+      },
+      other: {
+        mark: "أ",
+        title: "بوابة التشكيلات الأخرى",
+        subtitle: "تشكيلات أخرى",
+        description: "نطاق الجهات التي تضاف لاحقاً خارج القطاعات الأساسية.",
+        summary: [["التشكيلات", "9"], ["المسؤولون", "7"], ["الشواغر", "2"], ["طلبات معلقة", "1"]],
+        units: ["تشكيل جديد", "وحدة مساندة", "جهة قيد التوثيق", "مؤسسة تضاف لاحقاً"],
+        note: "هذه البوابة تحفظ مكاناً منظماً للتشكيلات التي ستضاف لاحقاً دون ازدحام الهيكل العام."
+      }
+    };
+
+    const params = new URLSearchParams(location.search);
+    const portal = portals[params.get("sector")] || portals.pmo;
+    document.title = `${portal.title} - شؤون الدولة`;
+    document.getElementById("portalMark").textContent = portal.mark;
+    document.getElementById("portalSubtitle").textContent = portal.subtitle;
+    document.getElementById("portalTitle").textContent = portal.title;
+    document.getElementById("portalDescription").textContent = portal.description;
+    document.getElementById("portalNote").textContent = portal.note;
+    document.getElementById("portalSummary").innerHTML = portal.summary.map(([label, value]) => `<div><strong>${value}</strong><span>${label}</span></div>`).join("");
+    document.getElementById("portalUnits").innerHTML = portal.units.map((unit, index) => `
+      <div class="item">
+        <div class="icon">${index + 1}</div>
+        <div><strong>${unit}</strong><span>تشكيل ضمن ${portal.title}</span></div>
+        <span class="badge">${index % 3 === 0 ? "بحاجة مراجعة" : "نشط"}</span>
+      </div>
+    `).join("");
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,35 @@
+{
+  "schema_version": "0.1.0",
+  "language": "ar",
+  "direction": "rtl",
+  "scope": "السلطة التنفيذية ← الوزارات",
+  "source_note": "أُدخلت هذه القائمة من البيانات التي زود بها المستخدم في هذه المرحلة، وتحتاج لاحقاً إلى ربط كل وزارة بمصدر رسمي عند توفره.",
+  "summary": {
+    "ministries_count": 23
+  },
+  "ministries": [
+    { "id": "ministry-interior", "name_ar": "وزارة الداخلية" },
+    { "id": "ministry-defense", "name_ar": "وزارة الدفاع" },
+    { "id": "ministry-foreign", "name_ar": "وزارة الخارجية" },
+    { "id": "ministry-finance", "name_ar": "وزارة المالية" },
+    { "id": "ministry-planning", "name_ar": "وزارة التخطيط" },
+    { "id": "ministry-oil", "name_ar": "وزارة النفط" },
+    { "id": "ministry-electricity", "name_ar": "وزارة الكهرباء" },
+    { "id": "ministry-trade", "name_ar": "وزارة التجارة" },
+    { "id": "ministry-industry-minerals", "name_ar": "وزارة الصناعة والمعادن" },
+    { "id": "ministry-agriculture", "name_ar": "وزارة الزراعة" },
+    { "id": "ministry-water-resources", "name_ar": "وزارة الموارد المائية" },
+    { "id": "ministry-transport", "name_ar": "وزارة النقل" },
+    { "id": "ministry-communications", "name_ar": "وزارة الاتصالات" },
+    { "id": "ministry-construction-housing", "name_ar": "وزارة الإعمار والإسكان والبلديات والأشغال العامة" },
+    { "id": "ministry-health", "name_ar": "وزارة الصحة" },
+    { "id": "ministry-education", "name_ar": "وزارة التربية" },
+    { "id": "ministry-higher-education", "name_ar": "وزارة التعليم العالي والبحث العلمي" },
+    { "id": "ministry-labor-social", "name_ar": "وزارة العمل والشؤون الاجتماعية" },
+    { "id": "ministry-justice", "name_ar": "وزارة العدل" },
+    { "id": "ministry-culture-tourism-antiquities", "name_ar": "وزارة الثقافة والسياحة والآثار" },
+    { "id": "ministry-youth-sports", "name_ar": "وزارة الشباب والرياضة" },
+    { "id": "ministry-migration-displacement", "name_ar": "وزارة الهجرة والمهجرين" },
+    { "id": "ministry-environment", "name_ar": "وزارة البيئة" }
+  ]
+}

@@ -1,0 +1,335 @@
+﻿<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>بوابة الهيكل العام للدولة - شؤون الدولة</title>
+  <style>
+    :root {
+      --bg: #eef2f5;
+      --surface: #ffffff;
+      --line: #d8e0e7;
+      --text: #182433;
+      --muted: #667586;
+      --primary: #0b2545;
+      --primary-2: #123a63;
+      --accent: #b9902f;
+      --red: #c91f2c;
+      --green: #168447;
+      --shadow: 0 18px 42px rgba(11, 37, 69, .12);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: "IBM Plex Sans Arabic", "Cairo", "Tajawal", "Segoe UI", Tahoma, Arial, sans-serif;
+      background:
+        linear-gradient(90deg, rgba(11,37,69,.035) 1px, transparent 1px),
+        linear-gradient(180deg, #f8fafc, var(--bg));
+      background-size: 44px 44px, auto;
+    }
+
+    a { font: inherit; }
+
+    .top {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 16px clamp(18px, 5vw, 70px);
+      background: rgba(255,255,255,.92);
+      border-bottom: 1px solid rgba(11,37,69,.08);
+      box-shadow: 0 10px 28px rgba(11,37,69,.08);
+      backdrop-filter: blur(12px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .flag {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      overflow: hidden;
+      border: 2px solid rgba(185,144,47,.65);
+      border-radius: 14px;
+      background: #fff;
+      box-shadow: 0 10px 20px rgba(11,37,69,.12);
+    }
+
+    .flag span { min-height: 18px; }
+    .flag .red { background: var(--red); }
+    .flag .white {
+      display: grid;
+      place-items: center;
+      color: var(--green);
+      font-size: 10px;
+      font-weight: 900;
+      background: #fff;
+    }
+    .flag .black { background: #111827; }
+
+    .brand strong {
+      display: block;
+      color: var(--primary);
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .brand span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .btn {
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 14px;
+      color: var(--primary);
+      background: #fff;
+      border: 1px solid rgba(11,37,69,.13);
+      border-radius: 12px;
+      text-decoration: none;
+      box-shadow: 0 8px 18px rgba(11,37,69,.06);
+    }
+
+    .btn.primary {
+      color: #fff;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+    }
+
+    main {
+      padding: 30px clamp(18px, 5vw, 70px) 44px;
+    }
+
+    .hero {
+      min-height: 250px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: end;
+      padding: 34px;
+      color: #fff;
+      background:
+        linear-gradient(90deg, rgba(201,31,44,.88) 0 7px, transparent 7px),
+        linear-gradient(135deg, #071b33, #0b2545 48%, #123a63);
+      border-radius: 20px;
+      box-shadow: 0 22px 48px rgba(11,37,69,.2);
+    }
+
+    .eyebrow {
+      width: fit-content;
+      margin: 0 0 8px;
+      padding: 6px 12px;
+      color: #10243d;
+      background: #fff6dd;
+      border-radius: 999px;
+      font-weight: 900;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      color: #fff;
+      font-size: clamp(36px, 5vw, 64px);
+      line-height: 1.1;
+    }
+
+    .hero p {
+      max-width: 720px;
+      margin: 0;
+      color: rgba(255,255,255,.78);
+      line-height: 1.9;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(130px, 1fr));
+      gap: 12px;
+      min-width: 310px;
+    }
+
+    .summary div {
+      padding: 16px;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 14px;
+    }
+
+    .summary strong {
+      display: block;
+      color: #fff;
+      font-size: 30px;
+      font-weight: 900;
+    }
+
+    .summary span { color: rgba(255,255,255,.72); }
+
+    .hint {
+      margin: 22px 0;
+      padding: 16px 18px;
+      color: #6b4a08;
+      background: #fff6dd;
+      border: 1px solid #f1d99b;
+      border-radius: 16px;
+      line-height: 1.8;
+      box-shadow: 0 12px 28px rgba(11,37,69,.07);
+    }
+
+    .gateway-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .gateway-card {
+      min-height: 178px;
+      display: grid;
+      align-content: space-between;
+      gap: 16px;
+      padding: 20px;
+      color: var(--text);
+      background: rgba(255,255,255,.96);
+      border: 1px solid rgba(11,37,69,.09);
+      border-radius: 18px;
+      text-decoration: none;
+      box-shadow: var(--shadow);
+    }
+
+    .gateway-card:hover {
+      border-color: rgba(185,144,47,.55);
+      transform: translateY(-2px);
+    }
+
+    .gateway-head {
+      display: grid;
+      grid-template-columns: 54px minmax(0, 1fr);
+      gap: 14px;
+      align-items: center;
+    }
+
+    .icon {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      border-radius: 16px;
+      font-weight: 900;
+      box-shadow: 0 12px 24px rgba(11,37,69,.16);
+    }
+
+    .gateway-card:nth-child(2) .icon { background: linear-gradient(135deg, var(--green), #0b6a42); }
+    .gateway-card:nth-child(3) .icon { background: linear-gradient(135deg, var(--accent), #8f681f); }
+    .gateway-card:nth-child(4) .icon { background: linear-gradient(135deg, var(--red), #9f1521); }
+
+    .gateway-card strong {
+      display: block;
+      color: var(--primary);
+      font-size: 19px;
+      font-weight: 900;
+    }
+
+    .gateway-card span {
+      display: block;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .badge {
+      width: fit-content;
+      padding: 5px 10px;
+      color: var(--primary);
+      background: #edf4fb;
+      border: 1px solid #d9e6f1;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    @media (max-width: 900px) {
+      .top,
+      .hero {
+        align-items: flex-start;
+        flex-direction: column;
+        grid-template-columns: 1fr;
+      }
+
+      .summary {
+        min-width: 0;
+      }
+    }  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <div class="flag" aria-label="العلم العراقي">
+        <span class="red"></span>
+        <span class="white">الله أكبر</span>
+        <span class="black"></span>
+      </div>
+      <div>
+        <strong>شؤون الدولة</strong>
+        <span>بوابة الهيكل العام للدولة</span>
+      </div>
+    </div>
+    <a class="btn primary" href="hr-platform-prototype.html">العودة للنظام</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <p class="eyebrow">خريطة دخول</p>
+        <h1>الهيكل العام للدولة</h1>
+        <p>هذه الصفحة للتوجيه فقط. اختر الجهة التي تريد الدخول إلى بوابتها، وستظهر البيانات التفصيلية داخل نطاق العمل المناسب.</p>
+      </div>
+      <div class="summary">
+        <div><strong>7</strong><span>بوابات رئيسية</span></div>
+        <div><strong>23</strong><span>وزارة</span></div>
+        <div><strong>19</strong><span>محافظة</span></div>
+        <div><strong>17</strong><span>هيئة مستقلة</span></div>
+      </div>
+    </section>
+
+    <p class="hint">اختر بوابة للدخول إلى نطاق واضح ومستقل، ثم انتقل إلى البيانات التفصيلية من داخل ذلك النطاق.</p>
+
+    <section class="gateway-grid">
+      <a class="gateway-card" href="sector-portal.html?sector=pmo">
+        <div class="gateway-head"><div class="icon">ر</div><div><strong>رئاسة الوزراء</strong><span>مكتب رئيس الوزراء ومؤسسات الرئاسة.</span></div></div>
+        <span class="badge">فتح البوابة</span>
+      </a>
+      <a class="gateway-card" href="sector-portal.html?sector=ministries">
+        <div class="gateway-head"><div class="icon">و</div><div><strong>الوزارات</strong><span>الوزارات ومسؤولو الوزارات والتشكيلات التابعة.</span></div></div>
+        <span class="badge">فتح البوابة</span>
+      </a>
+      <a class="gateway-card" href="sector-portal.html?sector=parliament">
+        <div class="gateway-head"><div class="icon">ن</div><div><strong>مجلس النواب</strong><span>المجلس واللجان البرلمانية.</span></div></div>
+        <span class="badge">فتح البوابة</span>
+      </a>
+      <a class="gateway-card" href="sector-portal.html?sector=judiciary">
+        <div class="gateway-head"><div class="icon">ق</div><div><strong>مجلس القضاء</strong><span>الجهات القضائية والتشكيلات المرتبطة.</span></div></div>
+        <span class="badge">فتح البوابة</span>
+      </a>
+      <a class="gateway-card" href="sector-portal.html?sector=commissions">
+        <div class="gateway-head"><div class="icon">هـ</div><div><strong>الهيئات المستقلة</strong><span>الهيئات ومسؤولوها وتقاريرها.</span></div></div>
+        <span class="badge">فتح البوابة</span>
+      </a>
+      <a class="gateway-card" href="sector-portal.html?sector=other">
+        <div class="gateway-head"><div class="icon">أ</div><div><strong>التشكيلات الأخرى</strong><span>مساحة منظمة للجهات التي تضاف لاحقاً.</span></div></div>
+        <span class="badge">فتح البوابة</span>
+      </a>
+    </section>
+  </main>
+</body>
+</html>
+
